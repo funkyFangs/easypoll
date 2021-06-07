@@ -1,0 +1,44 @@
+name: EasyPoll
+version: 1.0.0
+main: plugin.EasyPollPlugin
+api-version: 1.16
+
+description: Lets you make silly polls in chat
+author: funkyFangs
+
+commands:
+  poll:
+    description: Manages the creation and voting of polls
+    permission: easypoll.poll
+    usage: |
+      Usage: /<command> <name> <add | close | create | info | open | remove | set | vote> ...
+      or /<command> list
+
+permissions:
+  easypoll.poll:
+    description: Allows a user to use the /poll command
+    default: true
+
+  easypoll.poll.close.others:
+    description: Allows a user to close someone else's poll
+    default: op
+    children:
+      easypoll.poll: true
+
+  easypoll.poll.create.multiple:
+    description: Allows a user to create more than one poll at a time
+    default: op
+    children:
+      easypoll.poll: true
+
+  easypoll.poll.info.counts:
+    description: Allows a user to see vote counts from an ongoing poll
+    default: op
+    children:
+      easypoll.poll: true
+
+  easypoll.poll.vote.unlimited:
+    description: Allows a user to vote for a poll more than once
+    default: op
+    children:
+      easypoll.poll: true
