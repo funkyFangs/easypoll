@@ -45,7 +45,7 @@ public class CloseSubcommand extends PollSubcommand
             {
                 messageError("There is no poll named '" + RED + name + RESET + "'!", sender);
             }
-            else if (sender instanceof Player && !sender.hasPermission(CLOSE_OTHERS.toString())
+            else if (sender instanceof Player && !sender.hasPermission(CLOSE_OTHERS)
                      && !Objects.equals(getUUID(sender), poll.getCreator()))
             {
                 messageError("You do not have permission to close someone else's poll!", sender);
@@ -72,7 +72,7 @@ public class CloseSubcommand extends PollSubcommand
         {
             Map<String, Poll> polls = getPlugin().getPolls();
             UUID senderId = getUUID(sender);
-            Set<String> names = sender instanceof Player && !sender.hasPermission(CLOSE_OTHERS.toString())
+            Set<String> names = sender instanceof Player && !sender.hasPermission(CLOSE_OTHERS)
                                         ? polls.entrySet()
                                                .stream()
                                                .filter(e -> Objects.equals(senderId, e.getValue().getCreator()))

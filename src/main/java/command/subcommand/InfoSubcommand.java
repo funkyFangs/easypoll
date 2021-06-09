@@ -56,7 +56,7 @@ public class InfoSubcommand extends PollSubcommand
                 message("Time remaining: " + WHITE + DurationUtil.toString(timeRemaining), GOLD, sender);
 
                 Map<String, Integer> votes = poll.getVotes();
-                if (sender.hasPermission(INFO_COUNTS.toString()))
+                if (sender.hasPermission(INFO_COUNTS))
                 {
                     int winningCount = votes.values().stream().mapToInt(Integer::intValue).max().orElse(0);
                     boolean hasVotes = winningCount != 0;

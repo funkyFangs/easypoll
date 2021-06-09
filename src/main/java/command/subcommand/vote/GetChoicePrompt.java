@@ -1,5 +1,6 @@
 package command.subcommand.vote;
 
+import command.subcommand.VoteSubcommand;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.ValidatingPrompt;
@@ -10,7 +11,6 @@ import plugin.Poll;
 import java.util.Iterator;
 
 import static command.subcommand.VoteSubcommand.CHOICE;
-import static constant.EasyPollPermission.POLL;
 import static org.bukkit.ChatColor.GOLD;
 import static org.bukkit.ChatColor.WHITE;
 
@@ -22,7 +22,7 @@ public class GetChoicePrompt extends ValidatingPrompt
     @Override
     protected boolean isInputValid(@NotNull ConversationContext context, @NotNull String input)
     {
-        Object poll = context.getSessionData(POLL);
+        Object poll = context.getSessionData(VoteSubcommand.POLL);
         return poll instanceof Poll
                && ((Poll) poll).getVotes().computeIfPresent(input, (key, value) -> value + 1) != null;
     }
@@ -39,7 +39,7 @@ public class GetChoicePrompt extends ValidatingPrompt
     @Override
     public String getPromptText(@NotNull ConversationContext context)
     {
-        Poll poll = (Poll) context.getSessionData(POLL);
+        Poll poll = (Poll) context.getSessionData(VoteSubcommand.POLL);
 
         StringBuilder builder = new StringBuilder(GOLD.toString()).append("Please enter a valid choice:\n");
         if (poll != null)

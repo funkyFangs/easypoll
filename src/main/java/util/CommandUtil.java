@@ -34,7 +34,7 @@ public class CommandUtil
 
     public static void message(@NotNull String message, @NotNull ChatColor defaultColor)
     {
-        Bukkit.getServer().broadcast(formatMessage(message, defaultColor), POLL.toString());
+        Bukkit.getServer().broadcast(formatMessage(message, defaultColor), POLL);
     }
 
     public static void message(@NotNull String message)

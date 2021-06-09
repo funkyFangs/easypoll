@@ -49,7 +49,7 @@ public class CreateSubcommand extends PollSubcommand
             {
                 messageError("A poll with this name already exists!", sender);
             }
-            else if (sender instanceof Player && !sender.hasPermission(CREATE_MULTIPLE.toString())
+            else if (sender instanceof Player && !sender.hasPermission(CREATE_MULTIPLE)
                      && polls.values().stream().anyMatch(p -> ((Player) sender).getUniqueId().equals(p.getCreator())))
             {
                 messageError("You can only have 1 poll at a time!", sender);

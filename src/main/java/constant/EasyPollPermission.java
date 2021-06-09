@@ -1,28 +1,20 @@
 package constant;
 
 /**
- * Represents optional permissions for available EasyPoll commands
- *
+ * Represents the available permissions for the /poll command.
+ * Note: these constants are {@link String}s instead of an enum because they are only used for {@link String} values.
  * @author funkyFangs
  */
-public enum EasyPollPermission
+public class EasyPollPermission
 {
-    CLOSE_OTHERS("easypoll.poll.close.others"),
-    CREATE_MULTIPLE("easypoll.poll.create.multiple"),
-    INFO_COUNTS("easypoll.poll.info.counts"),
-    POLL("easypoll.poll"),
-    VOTE_UNLIMITED("easypoll.poll.vote.unlimited");
+    public static final String CLOSE_OTHERS = "easypoll.poll.close.others";
+    public static final String CREATE_MULTIPLE = "easypoll.poll.create.multiple";
+    public static final String INFO_COUNTS = "easypoll.poll.info.counts";
+    public static final String POLL = "easypoll.poll";
+    public static final String VOTE_UNLIMITED = "easypoll.poll.vote.unlimited";
 
-    private final String permission;
-
-    EasyPollPermission(String permission)
+    private EasyPollPermission()
     {
-        this.permission = permission;
-    }
-
-    @Override
-    public String toString()
-    {
-        return permission;
+        // Hides default constructor
     }
 }

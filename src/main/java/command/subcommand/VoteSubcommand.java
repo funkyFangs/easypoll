@@ -51,7 +51,7 @@ public class VoteSubcommand extends PollSubcommand
             {
                 messageError("There is no poll named '" + RED + name + RESET + "'!", sender);
             }
-            else if (sender instanceof Player && !sender.hasPermission(VOTE_UNLIMITED.toString())
+            else if (sender instanceof Player && !sender.hasPermission(VOTE_UNLIMITED)
                      && !poll.getVoters().add(((Player) sender).getUniqueId()))
             {
                 messageError("You have already voted for this poll!", sender);
@@ -99,7 +99,7 @@ public class VoteSubcommand extends PollSubcommand
         if (length <= 2)
         {
             Map<String, Poll> polls = getPlugin().getPolls();
-            Set<String> names = sender instanceof Player && !sender.hasPermission(VOTE_UNLIMITED.toString())
+            Set<String> names = sender instanceof Player && !sender.hasPermission(VOTE_UNLIMITED)
                                         ? polls.entrySet()
                                                .stream()
                                                .filter(e -> !e.getValue()
