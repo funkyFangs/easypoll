@@ -1,8 +1,15 @@
 plugins {
     id 'java'
+    id 'idea'
 }
 
 version '1.0.0'
+
+idea {
+    project {
+        languageLevel = '1.8'
+    }
+}
 
 repositories {
     mavenCentral()
