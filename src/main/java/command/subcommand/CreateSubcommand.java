@@ -49,12 +49,12 @@ public class CreateSubcommand extends PollSubcommand
             {
                 messageError("A poll with this name already exists!", sender);
             }
-            else if (sender instanceof Player && !sender.hasPermission(CREATE_MULTIPLE)
-                     && polls.values().stream().anyMatch(p -> ((Player) sender).getUniqueId().equals(p.getCreator())))
+            else if (sender instanceof Player player && !sender.hasPermission(CREATE_MULTIPLE)
+                     && polls.values().stream().anyMatch(poll -> player.getUniqueId().equals(poll.getCreator())))
             {
                 messageError("You can only have 1 poll at a time!", sender);
             }
-            else if (sender instanceof Conversable)
+            else if (sender instanceof Conversable conversable)
             {
                 Map<Object, Object> sessionData = new HashMap<>();
                 sessionData.put(NAME, name);
@@ -64,7 +64,7 @@ public class CreateSubcommand extends PollSubcommand
                                                     .withLocalEcho(false)
                                                     .withFirstPrompt(new CreatePollPrompt())
                                                     .withInitialSessionData(sessionData)
-                                                    .buildConversation((Conversable) sender)
+                                                    .buildConversation(conversable)
                                                     .begin();
             }
             else

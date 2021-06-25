@@ -59,8 +59,8 @@ public class CommandUtil
 
     public static UUID getUUID(@NotNull CommandSender sender)
     {
-        return sender instanceof Player
-                       ? ((Player) sender).getUniqueId()
+        return sender instanceof Player player
+                       ? player.getUniqueId()
                        : null;
     }
 }

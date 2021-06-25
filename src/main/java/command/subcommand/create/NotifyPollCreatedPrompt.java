@@ -22,9 +22,9 @@ public class NotifyPollCreatedPrompt extends MessagePrompt
     protected Prompt getNextPrompt(@NotNull ConversationContext context)
     {
         Conversable conversable = context.getForWhom();
-        if (conversable instanceof Player)
+        if (conversable instanceof Player player)
         {
-            message(WHITE + ((Player) conversable).getDisplayName() + RESET + " has opened a new poll named '"
+            message(WHITE + player.getDisplayName() + RESET + " has opened a new poll named '"
                     + WHITE + context.getSessionData(NAME) + RESET + "'!", GOLD);
         }
         else

@@ -22,9 +22,8 @@ public class GetChoicePrompt extends ValidatingPrompt
     @Override
     protected boolean isInputValid(@NotNull ConversationContext context, @NotNull String input)
     {
-        Object poll = context.getSessionData(VoteSubcommand.POLL);
-        return poll instanceof Poll
-               && ((Poll) poll).getVotes().computeIfPresent(input, (key, value) -> value + 1) != null;
+        return context.getSessionData(VoteSubcommand.POLL) instanceof Poll poll
+               && poll.getVotes().computeIfPresent(input, (key, value) -> value + 1) != null;
     }
 
     @Nullable
@@ -39,10 +38,9 @@ public class GetChoicePrompt extends ValidatingPrompt
     @Override
     public String getPromptText(@NotNull ConversationContext context)
     {
-        Poll poll = (Poll) context.getSessionData(VoteSubcommand.POLL);
-
         StringBuilder builder = new StringBuilder(GOLD.toString()).append("Please enter a valid choice:\n");
-        if (poll != null)
+
+        if (context.getSessionData(VoteSubcommand.POLL) instanceof Poll poll)
         {
             Iterator<String> iterator = poll.getVotes().keySet().iterator();
 
@@ -55,7 +53,6 @@ public class GetChoicePrompt extends ValidatingPrompt
                     builder.append("\n");
                 }
             }
-            return builder.toString();
         }
 
         return builder.toString();

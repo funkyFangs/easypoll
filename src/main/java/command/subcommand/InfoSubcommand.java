@@ -85,14 +85,11 @@ public class InfoSubcommand extends PollSubcommand
     public List<String> onTabComplete(@NotNull String[] arguments, @NotNull CommandSender sender)
     {
         Set<String> names = getPlugin().getPolls().keySet();
-        switch (arguments.length)
-        {
-            case 0:
-                return new ArrayList<>(names);
-            case 1:
-                return StringUtil.copyPartialMatches(arguments[0], names, new ArrayList<>());
-            default:
-                return NO_ARGUMENTS;
-        }
+        return switch (arguments.length)
+                       {
+                           case 0 -> new ArrayList<>(names);
+                           case 1 -> StringUtil.copyPartialMatches(arguments[0], names, new ArrayList<>());
+                           default -> NO_ARGUMENTS;
+                       };
     }
 }

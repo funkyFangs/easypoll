@@ -51,14 +51,14 @@ public class VoteSubcommand extends PollSubcommand
             {
                 messageError("There is no poll named '" + RED + name + RESET + "'!", sender);
             }
-            else if (sender instanceof Player && !sender.hasPermission(VOTE_UNLIMITED)
-                     && !poll.getVoters().add(((Player) sender).getUniqueId()))
+            else if (sender instanceof Player player && !sender.hasPermission(VOTE_UNLIMITED)
+                     && !poll.getVoters().add(player.getUniqueId()))
             {
                 messageError("You have already voted for this poll!", sender);
             }
             else if (length == 1)
             {
-                if (sender instanceof Player || sender instanceof ConsoleCommandSender)
+                if (sender instanceof Conversable conversable)
                 {
                     Map<Object, Object> sessionData = new HashMap<>();
                     sessionData.put(POLL, poll);
@@ -68,7 +68,7 @@ public class VoteSubcommand extends PollSubcommand
                                                         .withLocalEcho(false)
                                                         .withFirstPrompt(new GetChoicePrompt())
                                                         .withInitialSessionData(sessionData)
-                                                        .buildConversation((Conversable) sender)
+                                                        .buildConversation(conversable)
                                                         .begin();
                 }
                 else
@@ -99,12 +99,12 @@ public class VoteSubcommand extends PollSubcommand
         if (length <= 2)
         {
             Map<String, Poll> polls = getPlugin().getPolls();
-            Set<String> names = sender instanceof Player && !sender.hasPermission(VOTE_UNLIMITED)
+            Set<String> names = sender instanceof Player player && !sender.hasPermission(VOTE_UNLIMITED)
                                         ? polls.entrySet()
                                                .stream()
                                                .filter(e -> !e.getValue()
                                                               .getVoters()
-                                                              .contains(((Player) sender).getUniqueId()))
+                                                              .contains(player.getUniqueId()))
                                                .map(Map.Entry::getKey)
                                                .collect(toSet())
                                         : polls.keySet();

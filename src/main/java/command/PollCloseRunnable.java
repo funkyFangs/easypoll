@@ -45,10 +45,10 @@ public class PollCloseRunnable extends BukkitRunnable
             UUID creatorId = poll.getCreator();
             if (creatorId != null)
             {
-                Player player = server.getPlayer(creatorId);
-                if (player != null)
+                Player creator = server.getPlayer(creatorId);
+                if (creator != null && creator.isOnline())
                 {
-                    messageFinalResults(poll, player);
+                    messageFinalResults(poll, creator);
                 }
             }
 
@@ -57,7 +57,7 @@ public class PollCloseRunnable extends BukkitRunnable
                 if (playerId != creatorId)
                 {
                     Player player = server.getPlayer(playerId);
-                    if (player != null)
+                    if (player != null && player.isOnline())
                     {
                         messageFinalResults(poll, player);
                     }

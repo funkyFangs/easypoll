@@ -121,19 +121,14 @@ public class CreatePollPrompt implements Prompt
      */
     private void finalizeResults(ConversationContext context)
     {
-        Object nameReference = context.getSessionData(NAME);
-        Plugin plugin = context.getPlugin();
-
-        if (nameReference instanceof String && plugin instanceof EasyPollPlugin)
+        if (context.getSessionData(NAME) instanceof String name && context.getPlugin() instanceof EasyPollPlugin plugin)
         {
-            String name = (String) nameReference;
-            EasyPollPlugin easyPollPlugin = (EasyPollPlugin) plugin;
             UUID creatorId = getUUID((CommandSender) context.getForWhom());
 
-            PollCloseRunnable closeRunnable = new PollCloseRunnable(easyPollPlugin, name);
+            PollCloseRunnable closeRunnable = new PollCloseRunnable(plugin, name);
             Poll poll = new Poll(creatorId, prompt, duration, choices, closeRunnable);
 
-            easyPollPlugin.getPolls().put(name, poll);
+            plugin.getPolls().put(name, poll);
 
             closeRunnable.runTaskLater(plugin, duration.getSeconds() * TICKS_PER_SECOND);
         }

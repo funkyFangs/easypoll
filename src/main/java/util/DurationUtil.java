@@ -2,7 +2,9 @@ package util;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import throwable.UnreachableCodeError;
 
+import java.rmi.ServerError;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +24,13 @@ public class DurationUtil
     {
         String[] tokens = input.split(" +");
         int length = tokens.length;
-        switch (length)
-        {
-            case 2:
-                return parse(tokens[0], tokens[1]);
-            case 4:
-                return parse(tokens[0], tokens[1], tokens[2], tokens[3]);
-            case 6:
-                return parse(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
-            default:
-                return null;
-        }
+        return switch (length)
+                       {
+                           case 2 -> parse(tokens[0], tokens[1]);
+                           case 4 -> parse(tokens[0], tokens[1], tokens[2], tokens[3]);
+                           case 6 -> parse(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
+                           default -> null;
+                       };
     }
 
     /**
@@ -188,19 +186,12 @@ public class DurationUtil
         }
 
         StringBuilder builder = new StringBuilder();
-
-        switch (times.size())
+        return switch (times.size())
         {
-            case 1:
-                builder.append(times.get(0));
-                break;
-            case 2:
-                builder.append(times.get(0)).append(" and ").append(times.get(1));
-                break;
-            case 3:
-                builder.append(times.get(0)).append(", ").append(times.get(1)).append(", and ").append(times.get(2));
-        }
-
-        return builder.toString();
+            case 1 -> builder.append(times.get(0)).toString();
+            case 2 -> builder.append(times.get(0)).append(" and ").append(times.get(1)).toString();
+            case 3 -> builder.append(times.get(0)).append(", ").append(times.get(1)).append(", and ").append(times.get(2)).toString();
+            default -> throw new UnreachableCodeError("DurationUtil.toString:194");
+        };
     }
 }

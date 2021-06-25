@@ -34,15 +34,11 @@ public class PollCommand implements CommandExecutor, TabCompleter
 
     public PollCommand(@NotNull EasyPollPlugin plugin)
     {
-        Map<String, PollSubcommand> temp = new HashMap<>();
-
-        temp.put(CLOSE, new CloseSubcommand(plugin));
-        temp.put(CREATE, new CreateSubcommand(plugin));
-        temp.put(INFO, new InfoSubcommand(plugin));
-        temp.put(LIST, new ListSubcommand(plugin));
-        temp.put(VOTE, new VoteSubcommand(plugin));
-
-        registry = Collections.unmodifiableMap(temp);
+        registry = Map.of(CLOSE, new CloseSubcommand(plugin),
+                          CREATE, new CreateSubcommand(plugin),
+                          INFO, new InfoSubcommand(plugin),
+                          LIST, new ListSubcommand(plugin),
+                          VOTE, new VoteSubcommand(plugin));
     }
 
     @Override
