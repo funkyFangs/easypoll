@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import throwable.UnreachableCodeError;
 
-import java.rmi.ServerError;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,12 @@ public class DurationUtil
      * @return the input as a {@link Duration}, or null if the input is invalid
      */
     @Nullable
-    public static Duration parse(@NotNull String input)
+    public static Duration parse(String input)
     {
+        if (input == null || input.isEmpty())
+        {
+            return null;
+        }
         String[] tokens = input.split(" +");
         int length = tokens.length;
         return switch (length)

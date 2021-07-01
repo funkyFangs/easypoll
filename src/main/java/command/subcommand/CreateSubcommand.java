@@ -1,6 +1,9 @@
 package command.subcommand;
 
+import command.subcommand.create.CancelPollCreationCanceller;
 import command.subcommand.create.CreatePollPrompt;
+import command.subcommand.create.GetPollDurationPrompt;
+import command.subcommand.create.GetPollPromptPrompt;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationFactory;
@@ -15,7 +18,8 @@ import java.util.Map;
 
 import static command.PollCommand.NO_ARGUMENTS;
 import static constant.EasyPollPermission.CREATE_MULTIPLE;
-import static plugin.EasyPollPlugin.PREFIX;
+import static org.bukkit.ChatColor.GOLD;
+import static util.CommandUtil.message;
 import static util.CommandUtil.messageError;
 
 /**
@@ -23,8 +27,10 @@ import static util.CommandUtil.messageError;
  */
 public class CreateSubcommand extends PollSubcommand
 {
-    private static final String CANCEL = "cancel";
+    public static final String CHOICES = "choices";
+    public static final String DURATION = "duration";
     public static final String NAME = "name";
+    public static final String PROMPT = "prompt";
 
     public CreateSubcommand(@NotNull EasyPollPlugin plugin)
     {
@@ -49,7 +55,7 @@ public class CreateSubcommand extends PollSubcommand
             {
                 messageError("A poll with this name already exists!", sender);
             }
-            else if (sender instanceof Player player && !sender.hasPermission(CREATE_MULTIPLE)
+            else if (!sender.hasPermission(CREATE_MULTIPLE) && sender instanceof Player player
                      && polls.values().stream().anyMatch(poll -> player.getUniqueId().equals(poll.getCreator())))
             {
                 messageError("You can only have 1 poll at a time!", sender);
@@ -59,10 +65,11 @@ public class CreateSubcommand extends PollSubcommand
                 Map<Object, Object> sessionData = new HashMap<>();
                 sessionData.put(NAME, name);
 
-                new ConversationFactory(getPlugin()).withPrefix(context -> PREFIX)
-                                                    .withEscapeSequence(CANCEL)
-                                                    .withLocalEcho(false)
-                                                    .withFirstPrompt(new CreatePollPrompt())
+                message("Please answer the following questions in chat! No one else will see them.",
+                        GOLD, sender);
+
+                new ConversationFactory(getPlugin()).withConversationCanceller(new CancelPollCreationCanceller())
+                                                    .withFirstPrompt(new GetPollDurationPrompt())
                                                     .withInitialSessionData(sessionData)
                                                     .buildConversation(conversable)
                                                     .begin();

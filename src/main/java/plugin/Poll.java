@@ -34,6 +34,8 @@ public class Poll
         }
         this.closeRunnable = closeRunnable;
         startTime = Instant.now();
+
+        closeRunnable.schedule(duration);
     }
 
     @NotNull

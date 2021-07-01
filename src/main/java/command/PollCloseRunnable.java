@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import plugin.EasyPollPlugin;
 import plugin.Poll;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,6 +20,8 @@ import static util.CommandUtil.message;
  */
 public class PollCloseRunnable extends BukkitRunnable
 {
+    private static final long TICKS_PER_SECOND = 20;
+
     private final EasyPollPlugin plugin;
     private final String pollName;
 
@@ -26,6 +29,11 @@ public class PollCloseRunnable extends BukkitRunnable
     {
         this.plugin = plugin;
         this.pollName = pollName;
+    }
+
+    public void schedule(Duration duration)
+    {
+        runTaskLater(plugin, duration.getSeconds() * TICKS_PER_SECOND);
     }
 
     @Override
